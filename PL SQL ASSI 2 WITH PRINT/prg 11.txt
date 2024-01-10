@@ -1,0 +1,73 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		11. 	Change the above procedure so that it returns the number 
+			of employees removed via an  OUT parameter. 
+
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+set @cnt = 0;
+
+delimiter ..
+
+create procedure Question11(in temp text(20),out cnt int)
+begin
+
+	select concat('Deleting Row Of Job ',temp) as 'Result';
+    select count(*) into cnt from Employee where job = temp;
+ 	delete from Employee where job = temp;
+
+end..
+
+delimiter ;
+
+call Question11('App Developer',@cnt);
+
+select concat(@cnt,' Rows Are Deleted') as 'Answer';
+
+set @cnt = 0;
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	Result 1 :
+		
+		-------------------------------------
+		|	Result			    |
+		-------------------------------------
+		| Deleting Row Of Job App Developer |
+		-------------------------------------
+
+	
+	Result 2 :
+	
+		-------------------------------------
+		|	Answer			    |
+		-------------------------------------
+		| 	1 Rows Are Deleted          |
+		-------------------------------------
+		
+
+-----------------------------------------------------------------------------------------------------------			*/

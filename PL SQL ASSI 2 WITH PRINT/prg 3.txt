@@ -1,0 +1,77 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		3.	Create a PL/SQL block to update the location for an existing department. 
+			Use substitution  variable for dept no. and dept location. 
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+-- Question 3
+
+delimiter ..
+
+create procedure Question3(in num int,in loca text(20))
+begin
+
+	update Department 
+    set location = "Patna"
+    where dnum = num and location = loca;
+
+end..
+
+delimiter ;
+
+call Question3(6,"Pune");
+
+select * from Department;
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+		BEFORE :
+
+	dnum		dname		budget		managerid	location
+	
+	1		Hardware	1048572.12	141582651	Ahmedabad
+	2		Operations	12099101	287321212	Mumbai
+	3		Legal		222988.13	248965255	Jaipur
+	4		Marketing	538099.54	548977562	Delhi
+	5		Software	400011.12	141582651	Gandhinagar
+	6		Production	12099101	578875478	Pune
+	17		Shipping	5		489456522	Indoere
+
+
+			AFTER :
+
+	dnum		dname		budget		managerid	location
+	
+	1		Hardware	1048572.12	141582651	Ahmedabad
+	2		Operations	12099101	287321212	Mumbai
+	3		Legal		222988.13	248965255	Jaipur
+	4		Marketing	538099.54	548977562	Delhi
+	5		Software	400011.12	141582651	Gandhinagar
+	6		Production	12099101	578875478	Patan
+	17		Shipping	5		489456522	Indoere
+
+
+-----------------------------------------------------------------------------------------------------------			*/

@@ -1,0 +1,105 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		7. 	Write a PL/SQL block to award an employee with the bonus. 
+			Bonus is 15% of commission drawn by the employee.  
+			If the employee does not earn any commission then display a 
+			message that ‘employee does  not earn any commission’. 
+			Otherwise add bonus to the salary of the employee. 
+			The block  should accept an input for the employee number. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question7()
+begin
+
+	declare lmt int default 0;
+	declare temp int default 1;
+    declare bns int default 0;
+    declare result text(250) default '';
+        
+    select count(*) into lmt from Employee;
+    
+    update Employee
+    set bonus = 0;
+    
+    update Employee
+    set bonus = bsalary * 0.15
+    where ( netsalary - bsalary ) > 2000;
+    
+    loop_label : loop 
+
+		select bonus into bns from Employee where eid = temp;
+
+		if bns = 0 then
+			select concat(result,'Employee ',temp,' Does Not Earn Commision\n') into result;
+        end if;
+        
+        if temp = lmt then
+			leave loop_label;
+        end if;
+        
+        set temp = temp + 1;
+        
+	end loop loop_label;
+    
+    select result;
+
+end..
+
+delimiter ;
+
+call Question7();
+
+select * from Employee;
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	Result 1 :
+
+		eid	ename	bsalary	hr	da	pf	netsalary	bonus	sgrade	job 		dnum
+
+		1	Rahil	5000	1550	750	350	6950		0	2	App Developer	3
+		2	Mohit	2500	775	375	125	3525		0	1	Data Analysis	2
+		3	Krish	7000	2170	1050	560	9660		1050	3	Web Developer	1
+		4	Dev	10000	3100	1500	1000	13600		1500	5	Manager		5
+		5	Vishal	7500	2325	1125	600	10350		1125	4	HR		4
+		6	Rahul	1500	465	225	75	2115		0	1	App Developer	30
+
+
+	Result 2 :
+
+		-------------------------------------------------
+		|	result					|
+		-------------------------------------------------
+ 		|	Employee 1 Does Not Earn Commision	|
+ 		|	Employee 2 Does Not Earn Commision	|
+ 		|	Employee 6 Does Not Earn Commision	|
+		-------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

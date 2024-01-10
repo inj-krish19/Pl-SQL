@@ -1,0 +1,87 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		20. 	Write a PL/SQL Block that mimics selecting all columns and rows from the dept table. 
+			There  is no need to format the output, just select all columns and all rows. 
+			Use a cursor FOR loop.
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question20()
+begin
+
+	declare i,dn,mgrid int default 0;
+    declare amount int default 0;
+    declare dnam,loca text(20) default '';
+	declare result text(3000) default 'dnum\t\tdname\t\tbudget\t\tmanagerid\t\tlocation\n';
+
+	declare copyDept cursor for
+    select * from Department;
+    
+    declare continue handler for not found set i = 1;
+    
+    open copyDept;
+    
+    
+		loop_label : loop
+        
+			fetch copyDept into dn,dnam,amount,mgrid,loca;
+            
+              if i = 1 then 
+				leave loop_label;
+			end if;
+            
+            select concat(result,'\n',dn,'\t\t',dnam,'\t\t',amount,'\t\t',mgrid,'\t\t',loca) into result;
+        
+        end loop loop_label;
+    
+    close copyDept;
+
+	select result;
+
+end..
+
+delimiter ;
+
+call Question20();
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	-----------------------------------------------------------------------------------------
+	|	result										|
+	-----------------------------------------------------------------------------------------
+	|											|
+	| dnum		dname		budget		managerid	location		|
+ 	|											|
+ 	| 1		Hardware	1048572		141582651	Lucknow			|
+	| 2		Operations	12099101	287321212	Mumbai			|
+ 	| 3		Legal		222988		248965255	Ahmedabad		|
+ 	| 4		Marketing	538100		548977562	Surat			|
+ 	| 5		Software	400011		141582651	Delhi			|
+ 	| 6		Production	12099101	578875478	Patna			|
+	-----------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------			*/

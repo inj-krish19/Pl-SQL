@@ -1,0 +1,100 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		23. 	Write a procedure Raise_salary which gives a specified hike to all the employees 
+			working in  a specified department.The procedure should take department number 
+			and percentage of  hike as input.(Use for update and where current of)
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+delimiter ..
+
+create procedure Question23(in dno int,in raise int)
+begin
+
+	call RaiseSalary(dno,raise);
+
+end..
+
+delimiter ;
+
+delimiter ..
+
+create procedure RaiseSalary(in deptno int,in raise int)
+begin
+
+	declare i,salary int default 0;
+	declare csrEmp cursor for
+    select netsalary from Employee;
+
+	open csrEmp;
+    
+		temp : loop
+    
+			fetch csrEmp into salary;
+    
+			update Employee
+            set netsalary = netsalary  * (raise/100)
+            where dnum = deptno;
+    
+		end loop temp;
+    
+    close csrEmp;
+
+	select 'If Record Found Then Updated' as 'Result';
+
+end..
+
+delimiter ;
+
+call Question23(3,10);
+
+update Employee
+set netsalary = 10000
+where dnum = 3;
+
+select * from Employee;
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	Result 1 :
+
+			-----------------------------------------
+			|	Result				|
+			-----------------------------------------
+			| If Record Found Then Updated		|
+			-----------------------------------------
+
+	Result 2 :
+
+			-------------------------------------------------------------------------------------------------------------------
+			| eid	ename	bsalary	hr	da	pf	netsalary	bonus	sgrade	job		dnum	hiredate   |
+			--------------------------------------------------------------------------------------------------------------------
+			| 2	Mohit	2500	775	375	125	4053.75		0	1	Data Analysis	2	2000-09-10 |
+			| 3	Krish	7000	2170	1050	560	11109		1050	3	Web Developer	1	2010-03-08 |
+			| 4	Dev	10000	3100	1500	1000	15640		1500	5	Manager		5	2007-05-05 |	
+			| 5	Vishal	7500	2325	1125	600	13687.875	1125	4	HR		4	2003-11-25 |
+			--------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------			*/

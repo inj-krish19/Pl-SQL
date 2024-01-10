@@ -1,0 +1,181 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		13. 	Create a table having the following structure 
+				Accounts(Account_id, branch_name, amount_balance)  
+					
+					a. Write a PL/SQL procedure to perform withdraw 
+					   operation that only permits a withdrawal  if there 
+					   sufficient funds in the account. The procedure should 
+					   take Account_id and  withdrawal amount as input. 
+
+					b. Write a procedure to deposit money into someone's account. 
+					   The procedure should  accept account_id and deposit amount. 
+
+					c. Write a procedure to transfer money from 
+					   one person's account to another. 
+					   The  procedure should table two account_id’s one for giver
+					   and one for receiver and the amount  to be transferred. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+create table Accounts(
+	Account_id varchar(6), 
+	branch_name text(20),
+	amount_balance int
+);  
+
+truncate table Accounts;
+
+insert into Accounts
+values
+('ACN001','SHAHIBAG',50000),
+('ACN002','NAVARANGPURA',30000),
+('ACN003','NAROL',100000),
+('ACN004','THGALTEJ',75000),
+('ACN005','GOTA',1020);
+
+select * from Accounts;
+
+--	A
+
+delimiter ..
+
+create procedure Question13A(in aid varchar(6),in withdraw int)
+begin
+
+ 	declare amount int default 0;
+    
+    select amount_balance into amount from Accounts where Account_id = aid;
+    
+    if withdraw > amount then
+		select concat('Account Balance Of ',aid,'Is Less Than ',amount);
+	else
+		update Accounts
+		set amount_balance = amount_balance - amount
+        where Account_id = aid;
+		
+        select concat('Account Balance Of ',aid,'Is Updated') as 'Answer Of 13A';
+    end if;
+
+end..
+
+delimiter ;
+
+call Question13A('ACN001',2000);
+
+--	B
+
+delimiter ..
+
+create procedure Question13B(in aid varchar(6),in deposit int)
+begin
+
+ 	declare amount int default 0;
+    
+    select amount_balance into amount from Accounts where Account_id = aid;
+    
+    if deposit > 0 then
+		select concat('Account Balance Of ',aid,'Is Less Than 0') as 'Answer Of 13B';
+	else
+		update Accounts
+		set amount_balance = amount_balance + amount
+        where Account_id = aid;
+		
+        update Accounts
+		set amount = amount_balance
+        where Account_id = aid; 
+        
+        select concat('Account Balance Of ',aid,'Is Updated To ',amount) as 'Answer Of 13B';
+    end if;
+
+end..
+
+delimiter ;
+
+call Question13B('ACN001',2000);
+
+--	C
+
+drop procedure Question13c;
+
+delimiter ..
+
+create procedure Question13C(in sender varchar(6),in receiver varchar(6))
+begin
+
+ 	declare sendersAmmount int default 0;
+    	declare receiversAmmount int default 0;
+    
+   	select amount_balance into sendersAmmount from Accounts where Account_id = sender;
+    	select amount_balance into receiversAmmount from Accounts where Account_id = receiver;
+    
+	update Accounts
+	set amount_balance = receiversAmmount
+	where Account_id = sender;
+		
+    update Accounts
+	set amount_balance = sendersAmmount
+	where Account_id = receiver; 
+        
+        select concat('Account Balance Of ',sender,'Is Updated To ',sendersAmmount)  as 'Answer Of 13C';
+
+end..
+
+delimiter ;
+
+call Question13C('ACN001','ACN005');
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	Result 1 :
+
+			----------------------------------------
+			|	Answer Of 13A		       |
+			----------------------------------------
+			| Account Balance Of ACN001 Is Updated |
+			----------------------------------------
+
+
+	Result 2 :
+
+			--------------------------------------------
+			|	Answer Of 13B			   |
+			--------------------------------------------
+			| Account Balance Of ACN001 Is Less Than 0 |
+			--------------------------------------------
+
+	Result 3 :
+
+
+			--------------------------------------------
+			|	Answer Of 13C			   |
+			--------------------------------------------
+			| Account Balance Of ACN001Is Updated To 0 |
+			--------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

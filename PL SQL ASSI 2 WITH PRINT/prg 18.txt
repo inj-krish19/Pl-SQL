@@ -1,0 +1,112 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		18. 	Write a PL/SQL block that copies all departments to a table called old_dept. 
+			Do not use a  cursor FOR loop. Display how many rows were copied. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+create table old_dept(
+	dnum int,
+	dname text(30), 
+	budget double ,
+	managerid int
+);
+
+delimiter ..
+
+create procedure Question18()
+begin
+
+	declare cnt,i int default 0;
+    declare dn,mgrid int default 0;
+    declare dna text(30);
+    declare amount double;
+    
+    
+    declare odep cursor for
+    select dnum,dname,budget,managerid
+    from department;
+    
+    declare continue handler for not found set i = 1;
+
+	open odep;
+    
+		loop_label : while i = 0 do
+        
+        fetch odep into dn,dna,amount,mgrid;
+        
+            if i = 1 then 
+				leave loop_label;
+			end if;
+    
+			insert into old_dept(dnum,dname,budget,managerid)
+            values (dn,dna,amount,mgrid);
+        
+			set cnt = cnt + 1;
+        
+         end while loop_label;
+        
+	close odep;
+
+	select concat(cnt,' Rows Are Added') as 'Result';
+
+end..
+
+delimiter ;
+
+call Question18();
+
+drop table old_dept;
+
+truncate old_dept;
+
+select * from old_dept;
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	Result 1 :
+
+		--------------------
+		|	Result	   |
+		--------------------
+		| 6 Rows Are Added |
+		--------------------
+
+	Result 2 :
+
+		---------------------------------------------------------		
+		| dnum  dname		budget		managerid	|
+		---------------------------------------------------------
+		| 1	Hardware	1048572.12	141582651	|
+		| 2	Operations	12099101	287321212	|
+		| 3	Legal		222988.13	248965255	|
+		| 4	Marketing	538099.54	548977562	|
+		| 5	Software	400011.12	141582651	|
+		| 6	Production	12099101	578875478	|
+		---------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

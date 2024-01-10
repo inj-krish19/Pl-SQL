@@ -1,0 +1,100 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		17. 	Write a PL/SQL block and use cursor to retrieve the 
+			details of the employees with grade  5.and 
+			then display employee no,job_id ,max_sal and min_sal and 
+			grade for all these  employees. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+drop procedure Question17;
+
+delimiter ..
+
+create procedure Question17()
+begin
+
+	declare i int default 0;
+    
+    declare salary int default 0;
+    declare empid,minimum,maximum int default 0;
+    declare ejob text(20) default '';
+    declare result text(300) default '';
+    
+    declare eemp cursor for 
+    select eid,job from Employee
+    where sgrade = 5;
+    
+    declare continue handler for not found set i = 1;
+
+	open eemp;
+    
+		emp_loop : loop
+			
+       --     fetch eemp into empid,ejob,salary;
+            fetch eemp into empid,ejob;
+            
+            select concat(result,'\nEmployee Id ',empid , ' Have Job ',ejob) into result;
+            
+            if i = 1 then
+				leave emp_loop;
+			end if;
+            
+        end loop emp_loop;
+    
+    close eemp;
+
+	select min(netsalary) into minimum from Employee where sgrade = 5;
+    select max(netsalary) into maximum from Employee where sgrade = 5;
+    
+	-- 	select min(salary) into minimum from eemp;
+	-- 	select max(salary) into maximum from eemp;
+
+	select concat(result,'\n\nMinimum Salary Of All Employee Who Have Grade 5 Is ',minimum
+						 ,'\nMaximum Salary Of All Employee Who Have Grade 5 Is ',maximum
+                    ) into result;
+
+	select result;
+
+end..
+
+delimiter ;
+
+call Question17();
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+		-----------------------------------------------------------------
+		|	result							|
+		-----------------------------------------------------------------
+ 		| Employee Id 4 Have Job Manager				|
+		| 								|
+ 		| Minimum Salary Of All Employee Who Have Grade 5 Is 15640	|
+ 		| Maximum Salary Of All Employee Who Have Grade 5 Is 15640	|
+		-----------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------			*/

@@ -1,0 +1,56 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		12. 	Convert the above program to a function. 
+			Instead of using an OUT parameter for the  number of employees deleted, 
+			use the functions return value and display how many  employees were deleted. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create function Question12(temp text(20)) returns int(11)
+begin
+    
+    select count(*) into @cnt from Employee where job = temp;
+    delete from Employee where job = temp;
+    return @cnt;
+
+end..
+
+delimiter ;
+
+select concat(Question12('App Developer'),' Rows Are Deleted') as 'Answer';
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+		-------------------------------------
+		|	Answer			    |
+		-------------------------------------
+		| 	1 Rows Are Deleted          |
+		-------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

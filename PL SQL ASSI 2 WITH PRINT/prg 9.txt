@@ -1,0 +1,71 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		9. 	Write a PL/SQL block which accepts employee number and finds 
+			the average salary of the  employees working in the department where that employee works. 
+			If his salary is more than the average salary of his department, 
+			then display message that  ‘employee’s salary is more than average salary’ 
+			else display ‘employee’s salary is less than  average salary’ 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question9(in en int)
+begin
+
+	declare average int default 0;
+
+	select avg(bsalary) into average from Employee where eid = en;
+
+	select concat('Average Of Employee Whose Department Numnber ',en,' Is ',average) as 'Result' from Employee where en = dnum;
+
+	select 'Employee Have Same Salary As Average Salary' as 'Result';
+
+end..
+
+delimiter ;
+
+call Question9(2);
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	Result 1 :
+		
+		-----------------------------------------------------------------
+		|	Result							|
+		-----------------------------------------------------------------
+		| Average Of Employee Whose Department Numnber 2 Is 2500	|
+		-----------------------------------------------------------------
+
+	Result 2 :
+
+		-----------------------------------------------------------------
+		|	Result							|
+		-----------------------------------------------------------------
+		| 	Employee Have Same Salary As Average Salary		|
+		-----------------------------------------------------------------		
+
+-----------------------------------------------------------------------------------------------------------			*/

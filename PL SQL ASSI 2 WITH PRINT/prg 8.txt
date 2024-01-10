@@ -1,0 +1,78 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		8. 	Write a PL/SQL block which displays the department name, total no of employees
+			in the  department, avg salary of the employees in the department for all the 
+			departments from  department 10 to department 40 in the Dept table.
+			If no employees are working in  the department ,then display a message 
+			that no employees are working in that department. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+drop procedure Question8;
+
+delimiter ..
+
+create procedure Question8(in dn int)
+begin
+
+	declare dept_count int default 0;
+    declare avg_salary int default 0;
+    declare str text(50) default '';
+    
+    select count(*) into dept_count from Department where dnum = dn;
+    select avg(bsalary) into avg_salary from Employee;
+    
+    select dname from department where dnum = dn;
+    select dept_count as 'Department Count',avg_salary as 'Average Salary';-- ,'No Employees Are Working In Department' as 'Result';
+
+end..
+
+delimiter ;
+
+call Question8(1);
+
+select * from  Department;
+
+select * from  Employee;
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	Result 1 :
+			-----------------
+			| dname		|
+			-----------------
+			| Hardware	|
+			-----------------
+	
+	Result 2 :
+
+			-----------------------------------
+			| Department 	|	Average	   | 
+			| Count 	|	Salary	   |
+			------------------------------------
+			|	1	|	5583	   |
+			------------------------------------
+
+-----------------------------------------------------------------------------------------------------------			*/

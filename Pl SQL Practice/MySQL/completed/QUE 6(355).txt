@@ -1,0 +1,106 @@
+*
+
+ NAME - SHAH KRISH J.
+ ROLL NO. - 47
+ SUBJECT - MySQL
+ COURSE - COMPUTER SCIENCE
+ SUBJECT - PROGRAM OF MySQL
+ 
+
+PROGRAM NO. 5(2)
+----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+create database HRMS;
+USE HRMS;
+
+create table CustDetails
+(
+CustID integer(8) primary key not null,
+CustName varchar(20) ,
+CustADD varchar (20) 
+);
+
+insert into CustDetails values 
+(101,"Aarti","Virar"),
+(102,"Kavita","Dadar"),
+(103,"Saradhaa","Kandivani"),
+(104,"Anshu","Juhu"),
+(105,"Sonali","Thane");
+
+select * from CustDetails;
+
+/* CustID Is That CustRef */
+
+create table BillDetails
+(
+BillID integer(8)  not null,
+Qul integer(8),
+Rate integer(8),
+Amt integer(8),
+CustRef integer (8) not null,
+primary key (BillID),
+foreign key (CustRef) references CustDetails(CustID) 
+);
+
+desc BillDetails;
+
+insert into BillDetails values 
+(1,5,6,30,101),
+(2,4,50,200,102),
+(3,12,20,240,103),
+(4,3,50,150,104),
+(5,7,7,49,105);
+
+select * from BillDetails;
+
+
+alter table BillDetais drop foreign key fK_CustDetailsBillDetais; 
+
+alter table CustDetails drop  primary key; 
+
+create table Customer
+(
+CustID integer(8)  primary key auto_increment,
+CustName varchar(25) 
+);
+
+
+insert into Customer  (CustName) value  
+("Aasif"),
+("Anil"),
+("Smita"),
+("John");
+
+select * from Customer;
+
+
+create table CountryDetails
+(
+CountryID integer(8)  primary key unique,
+CountryName varchar(25) 
+);
+
+insert into   CountryDetails  values  
+(1,"India"),
+(2,"Singapore"),
+(3,"China"),
+(4,"America");
+(1,"India");
+
+/*
+ OUTPUT 1 
+
+CustID CustName
+1	   Aasif
+2	   Anil
+3	   Smita
+4	   John
+*/	
+
+/*
+OUTPUT 2
+0	24	14:34:47	(1,"India")	Error Code: 1064. You have an error in your SQL syntax;
+check the manual that corresponds to your MariaDB server version for the right syntax to use near '1,"India")'
+at line 1	0.000 sec
+ */
+

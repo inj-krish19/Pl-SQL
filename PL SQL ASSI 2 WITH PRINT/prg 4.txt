@@ -1,0 +1,65 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		4. 	Create a PL/SQL Block to delete the department created in exercise 2. 
+			Print to the screen  the number of rows affected. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+-- Question 4
+
+delimiter ..
+
+create procedure Question4()
+begin
+
+	declare sql_plus int;
+    declare cnt int;
+
+    select max(dnum) into sql_plus from Department;
+
+    select count(dnum) into cnt from Department
+    where dnum = sql_plus;
+
+	delete from Department where dnum = sql_plus;
+
+	select concat(cnt," Rows Affected") as "Result";
+
+end..
+
+delimiter ;
+
+call Question4();
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+			
+			--------------------------
+			|    Result		 |
+			--------------------------			
+			|  1 Rows Affected	 |
+			--------------------------
+
+-----------------------------------------------------------------------------------------------------------			*/

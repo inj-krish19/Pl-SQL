@@ -1,0 +1,85 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		21. 	Write a PL/SQL block to display the top 6 employees 
+			with respect to salaries using cursors. 
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question21()
+begin
+
+	declare i,salary int default 0;
+    declare namme text(20);
+    declare result text(200) default 'Data Of 6 Employees \n'; 
+    
+    declare sixEmpData cursor for
+	select ename,netsalary from Employee limit 6;
+
+	declare continue handler for not found set i = 1;
+
+	-- select result;
+
+	open sixEmpData;
+    
+		loop_label : loop
+        
+			fetch sixEmpData into namme,salary;
+            
+            if i = 1 then 
+				leave loop_label;
+			end if;
+        
+			-- select concat(namme,salary);
+			select concat(result,namme,'   ',salary,'\n') into result;
+        
+        end loop loop_label;
+    
+    close sixEmpData;
+
+	select result;
+
+end..
+
+delimiter ;
+
+call Question21();
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	
+		-----------------------------------------------------------------
+		|	result							|
+		-----------------------------------------------------------------
+		| Data Of 6 Employees 						|
+ 		| Mohit   	 4054						|
+ 		| Krish  	 11109						|
+ 		| Dev  		 15640						|
+ 		| Vishal  	 13688						|
+		----------------------------------------------------------------- 	
+
+
+
+-----------------------------------------------------------------------------------------------------------			*/

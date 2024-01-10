@@ -1,0 +1,113 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		15. 	Write a PL/SQL Block to create a PL/SQL table which can store grade and on of 
+			employees  with that grade. Get the information about the grade and 
+			number of employees with that  grade and store it in the PL/SQL table. 
+			Then retrieve the information from the PL/SQL table  and 
+			display it on the screen in the following way. 
+
+				No of employees with the grade 1 are 3 
+				No of employees with the grade 2 are 2 
+				No of employees with the grade 3 are 1 
+				No of employees with the grade 4 are 2 
+				No of employees with the grade 5 are 5 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question15()
+begin
+
+	declare lmt,grade int;
+	declare empcnt,cnt1,cnt2,cnt3,cnt4,cnt5
+    int default 0;
+    declare result text(250) default '';
+	
+    select count(*) into lmt from Employee;
+    
+    -- select lmt;
+    
+    loop_label_for_display : loop 
+
+		select sgrade into grade from Employee where eid = empcnt;
+
+		case grade 
+			when 1 then 
+				set cnt1 = cnt1 + 1;
+			when 2 then 
+				set cnt2 = cnt2 + 1;
+			when 3 then 
+				set cnt3 = cnt3 + 1;
+			when 4 then 
+				set cnt4 = cnt4 + 1;
+			when 5 then 
+				set cnt5 = cnt5 + 1;
+			else 
+				select concat(result,'') into result;
+        end case;
+
+		if empcnt = lmt then 
+			leave loop_label_for_display;
+        end if;
+    
+		set empcnt = empcnt + 1;
+    
+    end loop loop_label_for_display;
+    
+    select concat('Number Of Employees With Grade 1 Are ',cnt1,'\n',
+				  'Number Of Employees With Grade 2 Are ',cnt2,'\n',
+                  'Number Of Employees With Grade 3 Are ',cnt3,'\n',
+                  'Number Of Employees With Grade 4 Are ',cnt4,'\n',
+                  'Number Of Employees With Grade 5 Are ',cnt5,'\n'
+				) into result;
+	
+    
+    select result;
+
+end..
+
+delimiter ;
+
+call Question15();
+
+select * from Employee;
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	-------------------------------------------------
+	|	result					|
+	-------------------------------------------------
+	| Number Of Employees With Grade 1 Are 1	|
+ 	| Number Of Employees With Grade 2 Are 0	|
+ 	| Number Of Employees With Grade 3 Are 1	|
+ 	| Number Of Employees With Grade 4 Are 0	|
+	| Number Of Employees With Grade 5 Are 1	|
+	------------------------------------------------- 
+
+
+
+-----------------------------------------------------------------------------------------------------------			*/

@@ -1,0 +1,78 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		16. 	Write a program that gives all employees in department 10 a 15% pay increase. 
+			Display a  message displaying how many Employees were awarded the increase. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+delimiter ..
+
+create procedure Question16()
+begin
+
+	declare sal,i,empid int default 0;
+	declare cemp cursor for
+    select eid from employee;
+    
+	declare continue handler for not found set i=1;
+
+	open cemp;
+    
+		emp_loop : loop
+			
+            fetch cemp into empid;
+		
+			update Employee
+            set netsalary = (netsalary) + (netsalary * 0.15) 
+			where eid = empid;
+        
+			if i = 1 then
+				leave emp_loop;
+			end if;
+            
+		end loop emp_loop;
+    
+    close cemp;
+
+end..
+
+delimiter ;
+
+call Question16();
+
+desc employee;
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+		---------------------------------------------------------------------------------------------------------
+		| eid	ename	bsalary	hr	da	pf	netsalary	bonus	sgrade	job 		dnum	|
+		---------------------------------------------------------------------------------------------------------
+		| 2	Mohit	2500	775	375	125	4053.75		0	1	Data Analysis	2	|
+		| 3	Krish	7000	2170	1050	560	11109		1050	3	Web Developer	1	|
+		| 4	Dev	10000	3100	1500	1000	15640		1500	5	Manager		5	|
+		| 5	Vishal	7500	2325	1125	600	13687.875	1125	4	HR		4	|
+		---------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

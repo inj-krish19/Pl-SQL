@@ -1,0 +1,152 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		6. 	Write a PL/SQL block to find the salary grade of the specified employee. 
+			
+				If grade is 1 display ‘the employee is junior engineer’ 
+				If grade is 2 display ‘the employee is engineer’ 
+				If grade is 3 display ‘the employee is lead engineer’ 
+				If grade is 4 display ‘the employee is Manager’ 
+				If grade is 5 display ‘the employee is Project manager’ 
+			
+			(Use case expression) 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+-- Question 6
+
+delimiter ..
+
+create procedure Question6()
+begin 
+
+	declare lmt int;
+	declare cnt int default 0;
+	declare temp int default 0;
+    declare grade int default 0;
+    declare result text(250) default '';
+	
+    select count(*) into lmt from Employee;
+    
+    -- select lmt;
+    
+    loop_label_for_sgrade : loop 
+
+	select bsalary into temp from Employee where eid = cnt;
+
+		if temp < 3000 then 
+			update Employee 
+			set sgrade = 1
+			where bsalary <= 3000;
+		
+        elseif temp > 3000 and temp <= 5000 then
+		
+			update Employee 
+			set sgrade = 2
+			where bsalary > 3000 and bsalary <= 5000;
+            
+		elseif temp > 5000 and temp <= 7000 then
+        
+			update Employee 
+			set sgrade = 3
+			where bsalary > 5000 and bsalary <= 7000;
+		
+        elseif temp > 7000 and temp <= 9000 then 
+		
+			update Employee 
+			set sgrade = 4
+			where bsalary > 7000 and bsalary <= 9000;
+        
+        else
+		
+			update Employee 
+			set sgrade = 5
+			where bsalary > 9000;
+        
+        end if;
+
+		if cnt = lmt then 
+			leave loop_label_for_sgrade;
+        end if;
+    
+		set cnt = cnt + 1;
+    
+    end loop loop_label_for_sgrade;
+    
+    set cnt = 0;
+    
+    loop_label_for_display : loop 
+
+		select sgrade into grade from Employee where eid = cnt;
+
+		case grade 
+			when 1 then 
+				select concat(result,'Employee ',cnt,' Is Junior Student\n') into result;
+			when 2 then 
+				select concat(result,'Employee ',cnt,' Is Engineer\n') into result;
+			when 3 then 
+				select concat(result,'Employee ',cnt,' Is Lead Engineer\n') into result;
+			when 4 then 
+				select concat(result,'Employee ',cnt,' Is Manager\n') into result;
+			when 5 then 
+				select concat(result,'Employee ',cnt,' Is Project Manager\n') into result;
+			else 
+				select concat(result,'') into result;
+        end case;
+	
+
+		if cnt = lmt then 
+			leave loop_label_for_display;
+        end if;
+    
+		set cnt = cnt + 1;
+    
+    end loop loop_label_for_display;
+    
+    select result;
+    
+end..
+
+delimiter ; 
+
+call Question6();
+
+select * from Employee;
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	
+	-----------------------------------------
+	|	result				|
+	-----------------------------------------
+ 	|	Employee 1 Is Engineer		|
+  	|	Employee 2 Is Junior Student	|
+	|	Employee 3 Is Lead Engineer	|
+ 	|	Employee 4 Is Project Manager	|
+ 	|	Employee 5 Is Manager		|
+	|	Employee 6 Is Junior Student	|
+ 	-----------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

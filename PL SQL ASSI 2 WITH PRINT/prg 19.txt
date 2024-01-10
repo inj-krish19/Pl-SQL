@@ -1,0 +1,95 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		19. Display the names of employees who are working for Department 30. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question19()
+begin
+
+	declare i int default 0;
+	declare label text(20) default ' ';
+    declare result text(200) default 'All The Employees Who Are Working In Department Number 30 Is';
+
+	declare displayData cursor for 
+    select ename from Employee where dnum = 30;
+
+	declare continue handler for not found set i = 1;
+
+	open displayData;
+    
+		loop_label : loop
+			
+            fetch displayData into label;
+            
+            if i = 1 then 
+				leave loop_label;
+			end if;
+            
+            select concat(result,' ',label) into result;
+            
+        end loop loop_label;
+    
+    close displayData;
+
+	select result;
+
+end..
+
+delimiter ;
+
+call Question19();
+
+select * from Department;
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+	Result 1 :
+
+
+		-----------------------------------------------------------------------
+		|	result							      |
+		-----------------------------------------------------------------------
+		| All The Employees Who Are Working In Department Number 30 Is Rahul  |
+		-----------------------------------------------------------------------
+
+	Result 2 :
+
+
+		---------------------------------------------------------		
+		| dnum  dname		budget		managerid	|
+		---------------------------------------------------------
+		| 1	Hardware	1048572.12	141582651	|
+		| 2	Operations	12099101	287321212	|
+		| 3	Legal		222988.13	248965255	|
+		| 4	Marketing	538099.54	548977562	|
+		| 5	Software	400011.12	141582651	|
+		| 6	Production	12099101	578875478	|
+		---------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------			*/

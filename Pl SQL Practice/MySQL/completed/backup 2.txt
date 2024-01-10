@@ -1,0 +1,117 @@
+create database db1;
+use db1;
+create table customermaster(
+c_id varchar(6)
+primary key ,
+c_name varchar(25)
+not null,
+co_name varchar(25)
+not null,
+c_address varchar(100)
+not null,
+c_telephone varchar(20)
+not null 
+);
+desc customermaster;
+select * from customermaster;
+create table companymaster(
+co_id varchar(6)
+primary key ,
+co_name varchar(25)
+not null,
+co_address varchar(75)
+not null,
+co_person varchar(25)
+not null,
+p_terms varchar(25)
+not null
+);
+desc companymaster;
+select * from companymaster;
+create table categorymaster(
+cat_id varchar(6)
+primary key ,
+cat_name varchar(25)
+not null
+);
+desc categorymaster;
+select * from categorymaster;
+create table schememaster(
+sch_id varchar(6)
+primary key ,
+sch_descri varchar(25)
+not null
+);
+desc schememaster;
+select * from schememaster;
+create table employeemaster(
+e_id int(6)
+primary key ,
+e_name varchar(25)
+not null,
+e_designation varchar(25)
+not null,
+m_id varchar(25)
+not null
+);
+desc employeemaster;
+select * from employeemaster;
+create table productmaster(
+p_id int(6)
+primary key ,
+p_name varchar(25)
+not null,
+co_name varchar(75),
+cat_id varchar(75)
+not null,
+sch_id varchar(75)
+not null,
+cost dec(7,2)
+not null,
+qty int(3)
+not null,
+foreign key (co_name) references companymaster(co_name),
+foreign key (cat_id) references categorymaster(cat_id),
+foreign key (sch_id) references schememaster(sch_id)
+);
+desc productmaster;
+select * from productmaster;
+create table transactionmaster(
+t_id int(6)
+primary key ,
+c_id varchar(6)
+not null,
+e_id varchar(6)
+not null,
+t_date date
+not null,
+d_date date
+not null,
+amount dec(7,2)
+not null,
+foreign key (c_id) references companymaster(c_id),
+foreign key (e_id) references employeemaster(e_id)
+);
+desc transactionmaster;
+select * from transactionmaster;
+create table transactiondetails(
+t_id varchar(6)
+primary key ,
+p_id varchar(6)
+not null,
+p_cost dec(7,2)
+not null,
+foreign key (t_id) references transactionaster (TransactionID),
+foreign key (TransactionID) references TransactionMaster (TransactionID)
+);
+desc transactiondetails;
+select * from transactiondetails;
+
+/*
+insert into 
+	companymaster(c_name,c_roll_no,c_address,c_person,p_terms)
+values
+("Godrej",1,"Pirojshah Nagar","Sharanam Shah","Cash or Cheque"),
+("Samsung",2,"B1 , Near Onida House , Phase III , Mahakali Caves Road , Andheri(E)","Neha Deshmukh","Cash or Cheque"),
+("Sony",3,"S1 , Near Opera House , SandHurst Bridge , Charni Road","Rahul Raj","100% Advance Payment"),
+("Philips",4,"A3 , Sitara Chambers , Near MIG Club , Bandara(E)","John Candy","Only Cheque");*/

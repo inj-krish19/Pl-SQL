@@ -1,0 +1,80 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		14. 	Write a PL/SQL block to accept an employee number. and 
+			use a record variable to store the  record of that employee. 
+			and insert it into retired_employee table. 
+			Retired_employee table has the following structure 
+
+				Retired_employee (empno, ename, hiredate, leaveDate, salary, mgr_id, deptno). 
+
+			Set the leavedate to the current date. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+create table Retired_employee(
+empno int,
+ename varchar(30),  
+hiredate date, 
+leaveDate date, 
+salary int, 
+mgr_id varchar(6), 
+deptno int
+);
+drop table Retired_employee;
+
+delimiter ..
+
+create procedure Question14(
+	eno int,
+	enam varchar(30),  
+	hire date, 
+	sal int, 
+	manager int, 
+	dno int				)
+begin
+
+	insert into Retired_employee
+    values
+    (eno,enam,hire,date(curdate()),sal,manager,dno);
+
+end..
+
+delimiter ;
+
+call Question14(1,'RAJU','2015-05-25',70000,34128964,3);
+
+select * from Retired_employee; 
+
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	---------------------------------------------------------------------------------
+	|	empno	ename	hiredate	leaveDate	salary	mgrid	deptno	|
+	---------------------------------------------------------------------------------
+	|	1	RAJU	2015-05-25	2023-10-14	70000	341289	3	|
+	---------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------			*/

@@ -1,0 +1,165 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		 22. 	Use a cursor to retrieve the department number and the department name 
+			from the dept  table. Pass the department number to another cursor to 
+			retrieve from the emp table the  details of employee name, job, hiredate and salary 
+			of all the employees who work in that  department. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question22()
+begin
+
+	declare i,dn int default 0;
+    declare label text(20) default '';
+    
+    declare csrDept cursor for
+    select dnum,dname from Department;
+    
+    declare continue handler for not found set i = 1;
+    
+    open csrDept;
+    
+		loop1 : loop
+        
+			fetch csrDept into dn,label;
+            
+            if i = 1 then 
+				leave loop1;
+			end if;
+            
+            call subProcedure(dn,label);
+        
+        end loop loop1;
+    
+    close csrDept;
+
+end..
+
+delimiter ;
+
+delimiter ..
+
+create procedure subProcedure(in dn int,in dname text(20))
+begin
+
+	declare j,salary int default 0;
+    declare namme,job text(20) default '';
+    declare hdate date default curdate();
+    
+    declare result text(200) default '';
+    
+    declare csrEmp cursor for 
+    select ename,job,hiredate,bsalary 
+    from Employee where dnum = dn;
+    
+    declare continue handler for not found set j = 1;
+    
+    select concat(result,'Department Number ',dn,' Data Have Employee\n') into result;
+    
+    open csrEmp;
+    
+		loop2 : loop
+        
+			fetch csrEmp into namme,job,hdate,salary;
+            
+            if j = 1 then 
+				leave loop2;
+			end if;
+            
+            select concat(result,namme,' ',job,' ',hdate,' ',salary,'\n') into result;
+        
+        end loop loop2;
+    
+    close csrEmp;
+
+	select result;
+
+end..
+
+delimiter ;
+
+call Question22();
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	Result 1 :
+
+				-------------------------------------------------
+				|	result					|
+				-------------------------------------------------
+				| Department Number 1 Data Have Employee	|
+ 				| Krish  2010-03-08 7000			|
+				-------------------------------------------------
+ 
+	Result 2 :
+
+				-------------------------------------------------
+				|	result					|
+				-------------------------------------------------
+				| Department Number 2 Data Have Employee	|
+				| Mohit  2000-09-10 2500			|
+				-------------------------------------------------
+ 
+	Result 3 :
+
+				-------------------------------------------------
+				|	result					|
+				-------------------------------------------------
+				| Department Number 3 Data Have Employee 	|
+				-------------------------------------------------
+ 
+	Result 4 :
+
+				-------------------------------------------------
+				|	result					|
+				-------------------------------------------------
+				| Department Number 4 Data Have Employee	|
+				| Vishal  2003-11-25 7500 			|
+				-------------------------------------------------
+ 
+	Result 5 :
+
+				-------------------------------------------------
+				|	result					|
+				-------------------------------------------------
+				| Department Number 5 Data Have Employee	|
+ 				| Dev  2007-05-05 10000 			|
+				-------------------------------------------------
+ 	
+	Result 6 :
+
+				-------------------------------------------------
+				|	result					|
+				-------------------------------------------------
+				| Department Number 6 Data Have Employee	|
+				-------------------------------------------------
+ 
+
+
+-----------------------------------------------------------------------------------------------------------			*/

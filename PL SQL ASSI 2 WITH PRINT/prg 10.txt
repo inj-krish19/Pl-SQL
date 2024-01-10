@@ -1,0 +1,55 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		10. 	Create a procedure that deletes rows from the emp table. 
+			It should accept 1 parameter, job;  
+			only delete the employee’s with that job. 
+			Display how many employees were deleted.  
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+delimiter ..
+
+create procedure Question10(in temp text(20))
+begin
+
+	select concat('Deleting Row Of Job ',temp) as 'Result';
+	delete from Employee where job = temp;
+
+end..
+
+delimiter ;
+
+call Question10('App Developer');
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	-----------------------------------------
+	|	Result				|
+	-----------------------------------------
+	| Deleting Row Of Job App Developer	|
+	-----------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

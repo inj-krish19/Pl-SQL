@@ -1,0 +1,84 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+		1.	Write a PL/SQL block that selects the maximum department number in the 
+			department table  and store it in a SQL*PLUS variable. 
+			And print the results to screen. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+create database thirty;
+use thirty;
+
+select * from  Department;
+
+
+create table Department(
+	dnum int,
+	dname varchar(30), 
+	budget double ,
+	managerid int
+);
+
+truncate table Department;
+
+insert into Department values
+(1,'Hardware',1048572.12,141582651),
+(2,'Operations',12099101,287321212),
+(3,'Legal',222988.13,248965255),
+(4,'Marketing',538099.54,548977562),
+(5,'Software',400011.12,141582651),
+(6,'Production',12099101,578875478),
+(7,'Shipping',5,489456522);
+
+desc Department;
+
+-- Question 1
+
+delimiter ..
+
+create procedure Question1()
+begin
+
+	declare sql_plus int;
+
+    set sql_plus = 0;
+    select max(dnum) into sql_plus from Department;
+    select sql_plus;
+
+end..
+
+delimiter ;
+
+call Question1();
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+		----------
+		|sql_plus|
+		----------
+		|   7    |
+		----------
+
+
+-----------------------------------------------------------------------------------------------------------			*/

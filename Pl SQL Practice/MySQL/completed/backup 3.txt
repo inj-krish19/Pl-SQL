@@ -1,0 +1,217 @@
+create database assignment;
+use assignment;
+
+										/*  COMPANY MASTER*/
+create table companyMaster(
+	Company_ID varchar(6) primary key,
+    Company_Name varchar(25)  not null,
+    Address varchar(75),
+    ContactPerson varchar(25) not null,
+     paymentTerms varchar(25)
+);
+select * from companyMaster;
+										/*  CATEGORY MASTER */
+create table categoryMaster(
+CategoryID varchar(6) primary key,
+Category_name varchar(25) not null
+);
+select * from ;
+										/*  SCHEME MASTER */
+create table SchemeMaster(
+	schemeID varchar(6) primary key,
+	scheme_Description varchar(25)
+);
+										/* CUSTOMER MASTER*/
+create table customerMaster(
+	CustomerID varchar(6)primary key,
+    Customer_Name varchar(25) ,
+    companyname varchar(25),
+    Address varchar(100),
+    Telephone text (60) 
+);
+										/*  EMPLOYEE MASTER */
+create table EmployeeMaster(
+	EmployeeID varchar(6) primary key,
+    Employee_name varchar(25) not null,
+    Designation varchar(25),
+    ManagerID varchar(6)
+);
+										/* PRODUCT MASTER */
+create table ProductMaster
+(
+	productid varchar(6) primary key,
+    productname varchar(25),
+    Company_ID varchar(6),
+    foreign key (Company_ID) references companyMaster (Company_ID),
+    CategoryID varchar(6),
+    foreign key (CategoryID) references categoryMaster (CategoryID),
+    schemeID varchar(6),
+    foreign key (schemeID) references SchemeMaster (schemeID),
+    cost decimal(7,2) not null,
+    QtyInHand integer(3)
+);
+										/*  TRANSACTION MASTER */
+create table TransactionMaster(
+	TransactionID varchar(6) primary key,
+    CustomerID varchar(6),
+		 foreign key (CustomerID) references customerMaster(CustomerID),
+    EmployeeID varchar(6),
+	foreign key (EmployeeID) references EmployeeMaster(EmployeeID),
+    TrasactionDate date,
+    DeliveriDate date,
+    Amount decimal(7,2)
+);
+										/* TRACSACTION DETAIL  */
+create table transactiondetail(
+	TransactionID varchar (6),
+	foreign key (TransactionID) references TransactionMaster (TransactionID),
+    ProductID varchar(6),
+	foreign key (ProductID) references ProductMaster (ProductID),
+    ProductCost decimal(7,2)
+    
+);
+							/* INSERT DATA IN COMPANY MASTER TABLE */
+											
+insert into companyMaster(Company_Id, Company_Name,Address ,ContactPerson,  paymentTerms)
+values("CMP001","Godrej","kishornagar,vikhroli","sharanam Shah","chash or cheque");
+
+insert into companyMaster(Company_Id, Company_Name,Address ,ContactPerson,  paymentTerms)
+values("CMP002", "Samsung","B1, near poera house,phaseIII,mahakalicaves road,Andheri","neha","Cash or cheque");
+                
+insert into companyMaster(Company_Id, Company_Name,Address ,ContactPerson,  paymentTerms)
+values("CMP003","sony","S1,near opera house, sandhurst bridge,charni road","Rahul raj","1005 ADvance payment");
+
+insert into companyMaster(Company_Id, Company_Name,Address ,ContactPerson,  paymentTerms)
+values("CMP004","phillips","A3,sitara chambers,near migclub,bandra","Johan candy","Only cheque");
+
+
+							/* INSERT DATA IN CATEGORY MASTER TABLE */
+										
+insert into categoryMaster(CategoryID,Category_name)
+values("CAT001","Refrigerator");
+
+insert into categoryMaster(CategoryID,Category_name)
+values("CAT002","Washing Machine");
+
+insert into categoryMaster(CategoryID,Category_name)
+values("CAT003","Air conditionors");
+
+insert into categoryMaster(CategoryID,Category_name)
+values("CAT004","Digital Cameras");
+
+insert into categoryMaster(CategoryID,Category_name)
+values("CAT005","Television");
+            
+            
+							/* INSERT DATA IN CATEGORY MASTER TABLE */
+insert into SchemeMaster (schemeID,scheme_Description)
+values("SCH001","Buy One Take One Free");
+            
+insert into SchemeMaster (schemeID,scheme_Description)
+values("SCH002","50% discount");
+            
+insert into SchemeMaster (schemeID,scheme_Description)
+values("SCh003","20% discount");
+          
+insert into SchemeMaster (schemeID,scheme_Description)
+values("SCH004","One Bowl Free");
+            
+insert into SchemeMaster (schemeID,scheme_Description)
+values("SCH005","Two glasses Free");
+
+							/* INSERT DATA IN CUSTOMER MASTER TABLE */
+insert into customerMaster(CustomerID,Customer_Name,Address,Telephone)
+values("CUS001","Sumitaq Vane","A55,bose road thane","2547295923");
+
+insert into customerMaster(CustomerID,companyname,Address,Telephone)
+values("CUS002","Silicon Chip tech","A4,Sector 17,vashi","8497685239");
+
+insert into customerMaster(CustomerID,Customer_Name,Address,Telephone)
+values("CUS003","anil","55,bharat nagar, bandra","7491035285");
+
+insert into customerMaster(CustomerID,Customer_Name,companyname,Address,Telephone)
+values("CUS004","vaishali","sun pvt Ltd","235,paral village,lowerparel","7491035261");
+
+insert into customerMaster(CustomerID,Customer_Name,companyname,Address,Telephone)
+values("CUS005","jasmin","yash ovt Ltd","19 sector,rajput nagar","4920453729");
+
+select * from customerMaster;
+
+
+							/* INSERT DATA IN  EMPLOYEE  MASTER TABLE */
+
+insert into EmployeeMaster(EmployeeID,Employee_name,Designation,ManagerID)
+values("EMP001","disha patel","director","EMP010");
+
+insert into EmployeeMaster(EmployeeID,Employee_name,Designation,ManagerID)
+values("EMP002","yash yadav","Accountant","EMP011");
+
+insert into EmployeeMaster(EmployeeID,Employee_name,Designation,ManagerID)
+values("EMP003","kalpesh","salesman","EMP006");
+
+insert into EmployeeMaster(EmployeeID,Employee_name,Designation,ManagerID)
+values("EMP004","vikash","manager","EMP009");
+
+insert into EmployeeMaster(EmployeeID,Employee_name,Designation,ManagerID)
+values("EMP007","ramesh","receptionist","EMP008");
+
+
+							/* INSERT DATA IN PRODUCT MASTER TABLE */
+
+
+insert into ProductMaster(productid,productname,Company_ID,CategoryID,schemeID,cost,QtyInHand)
+values("PR0001","MAVICA","CMP005","CAT007","SCH003","15000","22");
+
+insert into ProductMaster(productid,productname,Company_ID,CategoryID,schemeID,QtyInHand)
+values("PR0002","TUBE TVS","CMP002","CAT002","SCH008","23000","45");
+
+insert into ProductMaster(productid,productname,Company_ID,CategoryID,schemeID,QtyInHand)
+values("PR0004","HD TVs","CMP001","CAT002","SCH004","28900","21");
+
+insert into ProductMaster(productid,productname,Company_ID,CategoryID,schemeID,QtyInHand)
+values("PR0009","LOCATION FREE TVs","CMP003","CAT009","SCh003","15600","18");
+
+insert into ProductMaster(productid,productname,Company_ID,CategoryID,schemeID,QtyInHand)
+values("PR0006","SUPER STAR","CMP004","CAT005","SCH001","43200","36");
+
+
+							/* INSERT DATA IN PRODUCT TRANSACTION  TABLE */
+             
+insert into TransactionMaster(TransactionID,CustomerID,EmployeeID, TrasactionDate,
+    DeliveriDate,Amount)
+values("TRA001","CUS003","EMP004","2003/4/5","2003/4/7","12000");
+
+insert into TransactionMaster(TransactionID,CustomerID,EmployeeID, TrasactionDate,
+    DeliveriDate,Amount)
+values("TRA005","CUS003","EMP003","2003/4/5","2003/4/7","32000");
+
+insert into TransactionMaster(TransactionID,CustomerID,EmployeeID,TrasactionDate ,
+    DeliveriDate ,Amount)
+values("TRA002","CUS005","EMP001","15000");
+
+insert into TransactionMaster(TransactionID,CustomerID,EmployeeID, TrasactionDate,
+    DeliveriDate,Amount)
+values("TRA003","CUS002","EMP002","24000");
+
+insert into TransactionMaster(TransactionID,CustomerID,EmployeeID, TrasactionDate ,
+    DeliveriDate ,Amount)
+values("TRA004","CUS001","EMP005","2390");
+
+							/* INSERT DATA IN PRODUCT TRANSACTION DETAIL TABLE */
+insert into transactiondetail( TransactionID,ProductID,ProductCost)
+values("TRA001","PRD001","15630");
+
+insert into transactiondetail( TransactionID,ProductID,ProductCost)
+values("TRA003","PRD003","34066");
+
+insert into transactiondetail( TransactionID,ProductID,ProductCost)
+values("TRA002","PRD002","34900");
+
+insert into transactiondetail( TransactionID,ProductID,ProductCost)
+values("TRA005","PRD005","130900");
+
+insert into transactiondetail( TransactionID,ProductID,ProductCost)
+values("TRA004","PRD004","40010");
+
+
+

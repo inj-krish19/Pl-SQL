@@ -1,0 +1,71 @@
+/*
+
+
+NAME - SHAH KRISH J.
+BATCH - I
+SEM - III
+YEAR - 2
+ROLL NO. - 47
+SUBJECT - DATABASE MANAGEMENT SYSTEMS - II
+COURSE - COMPUTER SCIENCE [ CS ]
+ASSIGNMENT - II
+
+
+QUESTION - 
+
+		2. 	Create a PL/SQL block to insert a new department number into the Departments table. 
+			Use  maximum dept number fetched from above and adds 10 to it. 
+			Use SQL*PLUS substitution  variable for department name. Leave the location AS null. 
+
+
+-----------------------------------------------------------------------------------------------------------			*/
+
+
+
+-- Question 2
+
+delimiter ..
+
+create procedure Question2()
+begin
+
+	declare sql_plus int;
+
+    set sql_plus = 0;
+    select max(dnum) into sql_plus from Department;
+
+	select sql_plus;
+    
+    update Department 
+    set dnum = sql_plus + 10
+    where dnum = sql_plus;
+
+	update Department 
+    set dname = NULL
+    where dname = sql_plus;
+
+end..
+
+delimiter ;
+
+call Question2();
+
+
+
+/*		-------------------------------------------------------------------------------------------
+
+OUTPUT :
+
+-----------------------------------------------------------------------------------------------------------
+
+
+		---------
+		|sql_plus|	
+		---------  
+		|  17	|
+		---------
+
+
+
+
+-----------------------------------------------------------------------------------------------------------			*/

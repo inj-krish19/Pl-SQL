@@ -1,0 +1,12 @@
+*
+
+ NAME - SHAH KRISH J.
+ ROLL NO. - 47
+ SUBJECT - MySQL
+ COURSE - COMPUTER SCIENCE
+ SUBJECT - PROGRAM OF MySQL
+ 
+
+PROGRAM NO. 3
+----------------------------------------------------------------------------------------------------------------------------------------------------*/
+

@@ -1,0 +1,37 @@
+*
+
+ NAME - SHAH KRISH J.
+ ROLL NO. - 47
+ SUBJECT - MySQL
+ COURSE - COMPUTER SCIENCE
+ SUBJECT - PROGRAM OF MySQL
+ 
+
+PROGRAM NO. 1
+----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+create database HRMS;
+show databases;
+use HRMS;
+/* For 4,5,6 we need admin login so can't do without it
+after that exersice 7 */
+create table Client(
+ClntID varchar(6)
+unique key,
+ClntName varchar(35)
+not null,
+ClntUrl varchar(50)
+default "www.google.com",
+ClntDesc varchar(255)
+not null
+);
+insert into 
+	Client(ClntID,ClntName,ClntUrl,ClntDesc)
+values
+    	("CLT001","SCT India","http://sctindia.com","Software Package Firm"),
+	("CLT002","ABCL Corp","http://abcl.com","Dealer in Kitchen Utensils"),
+	("CLT003","Dell Corp","http://delcorp.com","Dealer in Computer Periphels"),
+	("CLT004","Essenpross","NULL","Dealer in Electronics");
+commit;
+drop database HRMS;
